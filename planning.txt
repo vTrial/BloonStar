@@ -1,0 +1,13 @@
+Split into 2 parts
+1. database
+2. human readable display
+
+Database:
+player: {
+    match_oldest,
+    match_newer
+}
+
+in each match, add
+* time of retrieval (unix time?)
+* 
