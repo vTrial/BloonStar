@@ -1,7 +1,5 @@
 # datachipper
  Battles 2 stats website
 
-npm create svelte@latest myapp
-cd myapp
-npm install
-npm run dev
+How to develop this locally:
+1. There's a readme in frontend folder. This project uses svelte
