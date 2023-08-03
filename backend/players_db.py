@@ -1,6 +1,5 @@
-import sqlite3 as sqlite
-import os
 import requests
+import db_fns
 
 # for paginating lb
 def get_lb_total_pages():
@@ -10,23 +9,18 @@ def get_lb_total_pages():
     lb_page_count = (total_hom_players - 1) // 50 + 1
     return lb_page_count
 
-# easier to store in db
-def profile_url_to_id(url):
-    user_id = url.split("/")[5]
-    return user_id
-
 # create players db if doesn't exist
-def createPlayersDatabase(cursor):
+def createPlayersDb(cursor):
     cursor.execute("CREATE TABLE IF NOT EXISTS Players(DisplayName, Score, UserId PRIMARY KEY)")
 
-def fillPlayersDatabase(cursor, connection):
+def fillPlayersDb(cursor, connection):
     lb_total_pages = get_lb_total_pages()
     for lb_page_num in range(1, lb_total_pages + 1):
         lb_url = f"https://data.ninjakiwi.com/battles2/homs/season_12/leaderboard?page={lb_page_num}"
         lb_json = requests.request("GET", lb_url).json()
         if lb_json["success"]:
             for player in lb_json["body"]:
-                user_id = profile_url_to_id(player["profile"])
+                user_id = db_fns.profile_url_to_id(player["profile"])
                 insert_replace_query = (
                     "INSERT OR REPLACE INTO Players (DisplayName, Score, UserId) "
                     "VALUES (?, ?, ?)"
@@ -35,12 +29,10 @@ def fillPlayersDatabase(cursor, connection):
                 cursor.execute(insert_replace_query, insert_replace_vals)
     connection.commit()
 
-# creates file in backend folder
-b2_db_filepath = os.path.join(os.path.dirname(__file__), "b2db.db")
-b2_db_connection = sqlite.connect(b2_db_filepath)
-b2_db_cursor = b2_db_connection.cursor()
+b2_db_connection = db_fns.b2_db_connection
+b2_db_cursor = db_fns.b2_db_cursor
 
-createPlayersDatabase(b2_db_cursor)
-fillPlayersDatabase(b2_db_cursor, b2_db_connection)
-res = b2_db_cursor.execute("SELECT DisplayName from Players")
-print(len(res.fetchall()))
+createPlayersDb(b2_db_cursor)
+fillPlayersDb(b2_db_cursor, b2_db_connection)
+# res = b2_db_cursor.execute("SELECT * from Players")
+# print(res.fetchall())
