@@ -8,7 +8,26 @@ def createMatchesDb():
     cursor = conn.cursor()
     cursor.execute((
         "CREATE TABLE IF NOT EXISTS "
-        "Matches(UserId, OppId, Map, Gametype, UserTrio, UserHero, OppTrio, OppHero, UserOutcome, Duration, EndRound)"
+        "Matches("
+            "MatchId INTEGER PRIMARY KEY,"
+            "UserId TEXT, "
+            "OppId TEXT, "
+            "Map TEXT, "
+            "Gametype TEXT, "
+            "UserTrio TEXT, "
+            "UserHero TEXT, "
+            "OppTrio TEXT, "
+            "OppHero TEXT, "
+            "UserOutcome TEXT, "
+            "Duration INTEGER, "
+            "EndRound INTEGER, "
+            "Time INTEGER, "
+            "UNIQUE("
+                "UserId, OppId, Map, Gametype, "
+                "UserTrio, UserHero, OppTrio, OppHero, "
+                "UserOutcome, Duration, EndRound"
+            ")"
+        ")"
     ))
     conn.commit()
     cursor.close()
@@ -20,6 +39,8 @@ def fillMatchesDb():
     user_ids = cursor.execute("SELECT UserId from Players").fetchall()
     for user_id in user_ids:
         user_id = user_id[0]
+        # consider using sqlite native option?
+        time_of_match = int(time.time())
         user_matches_url = f"https://data.ninjakiwi.com/battles2/users/{user_id}/matches"
         user_matches_json = requests.request("GET", user_matches_url).json()
         for user_match in user_matches_json["body"]:
@@ -36,17 +57,17 @@ def fillMatchesDb():
             match_duration = user_match["duration"]
             match_end_round = user_match["endRound"]
             insert_query = (
-                "INSERT INTO Matches "
+                "INSERT OR IGNORE INTO Matches "
                 "(UserId, OppId, Map, Gametype, "
                 "UserTrio, UserHero, OppTrio, OppHero, "
-                "UserOutcome, Duration, EndRound) "
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                "UserOutcome, Duration, EndRound, Time) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             )
 
             insert_vals = (
                 user_id, opp_id, match_map, match_gametype,
                 user_trio, user_hero, opp_trio, opp_hero,
-                user_outcome, match_duration, match_end_round
+                user_outcome, match_duration, match_end_round, time_of_match
             )
 
             cursor.execute(insert_query, insert_vals)
