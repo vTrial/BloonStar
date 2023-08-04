@@ -15,7 +15,15 @@ def createPlayersDb():
     print("created players db")
     conn = sql.connect(db_fns.get_b2_db_filepath())
     cursor = conn.cursor()
-    cursor.execute("CREATE TABLE IF NOT EXISTS Players(DisplayName, Score, UserId PRIMARY KEY)")
+    cursor.execute((
+        "CREATE TABLE IF NOT EXISTS players("
+            "id INTEGER PRIMARY KEY, "
+            "display_name TEXT, "
+            "score INTEGER, "
+            "user_id TEXT, "
+            "UNIQUE (user_id)"
+        ")"
+    ))
     conn.commit()
     cursor.close()
     conn.close()
@@ -32,7 +40,7 @@ def fillPlayersDb():
             for player in lb_json["body"]:
                 user_id = db_fns.profile_url_to_id(player["profile"])
                 insert_replace_query = (
-                    "INSERT OR REPLACE INTO Players (DisplayName, Score, UserId) "
+                    "INSERT OR REPLACE INTO Players (display_name, score, user_id) "
                     "VALUES (?, ?, ?)"
                 )
                 insert_replace_vals = (player['displayName'], player['score'], user_id)

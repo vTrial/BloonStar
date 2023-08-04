@@ -1,2 +1,3 @@
 backend/b2db.db
+backend/b2db.db-journal
 backend/__pycache__
