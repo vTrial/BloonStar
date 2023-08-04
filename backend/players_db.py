@@ -12,6 +12,7 @@ def get_lb_total_pages():
 
 # create players db if doesn't exist
 def createPlayersDb():
+    print("created players db")
     conn = sql.connect(db_fns.get_b2_db_filepath())
     cursor = conn.cursor()
     cursor.execute("CREATE TABLE IF NOT EXISTS Players(DisplayName, Score, UserId PRIMARY KEY)")
@@ -20,6 +21,7 @@ def createPlayersDb():
     conn.close()
 
 def fillPlayersDb():
+    print("filling players db")
     conn = sql.connect(db_fns.get_b2_db_filepath())
     cursor = conn.cursor()
     lb_total_pages = get_lb_total_pages()
