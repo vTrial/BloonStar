@@ -8,24 +8,29 @@ def createMatchesDb():
     cursor = conn.cursor()
     cursor.execute((
         "CREATE TABLE IF NOT EXISTS "
-        "Matches("
-            "MatchId INTEGER PRIMARY KEY,"
-            "UserId TEXT, "
-            "OppId TEXT, "
-            "Map TEXT, "
-            "Gametype TEXT, "
-            "UserTrio TEXT, "
-            "UserHero TEXT, "
-            "OppTrio TEXT, "
-            "OppHero TEXT, "
-            "UserOutcome TEXT, "
-            "Duration INTEGER, "
-            "EndRound INTEGER, "
-            "Time INTEGER, "
+        "matches("
+            "id INTEGER PRIMARY KEY,"
+            "user_id TEXT, "
+            "opp_id TEXT, "
+            "map TEXT, "
+            "gametype TEXT, "
+            "user_hero TEXT, "
+            "user_tower_1 TEXT, "
+            "user_tower_2 TEXT, "
+            "user_tower_3 TEXT, "
+            "opp_hero TEXT, "
+            "opp_tower_1 TEXT, "
+            "opp_tower_2 TEXT, "
+            "opp_tower_3 TEXT, "
+            "user_outcome TEXT, "
+            "duration INTEGER, "
+            "end_round INTEGER, "
+            "time INTEGER, "
             "UNIQUE("
-                "UserId, OppId, Map, Gametype, "
-                "UserTrio, UserHero, OppTrio, OppHero, "
-                "UserOutcome, Duration, EndRound"
+                "user_id, opp_id, map, gametype, "
+                "user_hero, user_tower_1, user_tower_2, user_tower_3, "
+                "opp_hero, opp_tower_1, opp_tower_2, opp_tower_3, "
+                "user_outcome, duration, end_round"
             ")"
         ")"
     ))
@@ -36,7 +41,7 @@ def createMatchesDb():
 def fillMatchesDb():
     conn = sql.connect(db_fns.get_b2_db_filepath())
     cursor = conn.cursor()
-    user_ids = cursor.execute("SELECT UserId from Players").fetchall()
+    user_ids = cursor.execute("SELECT user_id from players").fetchall()
     for user_id in user_ids:
         user_id = user_id[0]
         # consider using sqlite native option?
@@ -49,24 +54,26 @@ def fillMatchesDb():
             opp_id = db_fns.profile_url_to_id(opp_side["profileURL"])
             match_map = user_match["map"]
             match_gametype = user_match["gametype"]
-            user_trio = ','.join(sorted([user_side["towerone"], user_side["towertwo"], user_side["towerthree"]]))
+            user_tower_1, user_tower_2, user_tower_3 = user_side["towerone"], user_side["towertwo"], user_side["towerthree"]
             user_hero = user_side["hero"]
-            opp_trio = ','.join(sorted([opp_side["towerone"], opp_side["towertwo"], opp_side["towerthree"]]))
+            opp_tower_1, opp_tower_2, opp_tower_3 = opp_side["towerone"], opp_side["towertwo"], opp_side["towerthree"]
             opp_hero = opp_side["hero"]
             user_outcome = user_side["result"]
             match_duration = user_match["duration"]
             match_end_round = user_match["endRound"]
             insert_query = (
                 "INSERT OR IGNORE INTO Matches "
-                "(UserId, OppId, Map, Gametype, "
-                "UserTrio, UserHero, OppTrio, OppHero, "
-                "UserOutcome, Duration, EndRound, Time) "
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                "(user_id, opp_id, map, gametype, "
+                "user_hero, user_tower_1, user_tower_2, user_tower_3, "
+                "opp_hero, opp_tower_1, opp_tower_2, opp_tower_3, "
+                "user_outcome, duration, end_round, time) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             )
 
             insert_vals = (
-                user_id, opp_id, match_map, match_gametype,
-                user_trio, user_hero, opp_trio, opp_hero,
+                user_id, opp_id, match_map, match_gametype, 
+                user_hero, user_tower_1, user_tower_2, user_tower_3, 
+                opp_hero, opp_tower_1, opp_tower_2, opp_tower_3, 
                 user_outcome, match_duration, match_end_round, time_of_match
             )
 
