@@ -62,12 +62,29 @@ def get_users():
 def get_matches():
     conn = sql.connect(db_fns.get_b2_db_filepath())
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM matches")
+    cursor.execute((
+        "SELECT * FROM matches "
+        "WHERE time > 1691125718 "
+        "AND gametype = 'Ranked'"
+    ))
     matches = cursor.fetchall()
     cursor.close()
     conn.close()
     return jsonify({'matches': matches})
 
+@app.route('/matches/count', methods=['GET'])
+def get_matches_count():
+    conn = sql.connect(db_fns.get_b2_db_filepath())
+    cursor = conn.cursor()
+    cursor.execute((
+        "SELECT COUNT(*) FROM matches "
+        "WHERE time > 1691125718 "
+        "AND gametype = 'Ranked'"
+    ))
+    matches = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify({'matches': matches})
 @app.route('/towers/get', methods=['GET'])
 def get_towers():
     conn = sql.connect(db_fns.get_b2_db_filepath())
@@ -79,7 +96,8 @@ def get_towers():
                 f"SUM(CASE WHEN user_tower_1 = '{tower}' THEN 1 ELSE 0 END) +"
                 f"SUM(CASE WHEN user_tower_2 = '{tower}' THEN 1 ELSE 0 END) +"
                 f"SUM(CASE WHEN user_tower_3 = '{tower}' THEN 1 ELSE 0 END) AS total_farms "
-            "FROM Matches "
+            "FROM Matches WHERE time > 1691125718 "
+            "AND gametype = 'Ranked'"
         ))
         tower_count = cursor.fetchone()[0]
         tower_counts[tower] = tower_count
