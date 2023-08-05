@@ -100,7 +100,17 @@ def get_towers():
             "AND gametype = 'Ranked'"
         ))
         tower_count = cursor.fetchone()[0]
-        tower_counts[tower] = tower_count
+        cursor.execute((
+            "SELECT "
+                f"SUM(CASE WHEN user_tower_1 = '{tower}' THEN 1 ELSE 0 END) +"
+                f"SUM(CASE WHEN user_tower_2 = '{tower}' THEN 1 ELSE 0 END) +"
+                f"SUM(CASE WHEN user_tower_3 = '{tower}' THEN 1 ELSE 0 END) AS total_farms "
+            "FROM Matches WHERE time > 1691125718 "
+            "AND gametype = 'Ranked' "
+            "AND user_outcome = 'win'"
+        ))
+        tower_wins = cursor.fetchone()[0]
+        tower_counts[tower] = {"games": tower_count, "wins": tower_wins}
     cursor.close()
     conn.close()
     return jsonify({'tower counts': tower_counts})
