@@ -7,6 +7,7 @@ from flask_cors import CORS
 import schedule
 import time
 import threading
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -81,39 +82,33 @@ def get_matches_count():
         "WHERE time > 1691125718 "
         "AND gametype = 'Ranked'"
     ))
-    matches = cursor.fetchall()
+    matches = cursor.fetchone()[0]
     cursor.close()
     conn.close()
-    return jsonify({'matches': matches})
+    return jsonify(matches)
 @app.route('/towers/get', methods=['GET'])
 def get_towers():
     conn = sql.connect(db_fns.get_b2_db_filepath())
     cursor = conn.cursor()
     tower_counts = {}
     for tower in towers:
-        cursor.execute((
-            "SELECT "
-                f"SUM(CASE WHEN user_tower_1 = '{tower}' THEN 1 ELSE 0 END) +"
-                f"SUM(CASE WHEN user_tower_2 = '{tower}' THEN 1 ELSE 0 END) +"
-                f"SUM(CASE WHEN user_tower_3 = '{tower}' THEN 1 ELSE 0 END) AS total_farms "
-            "FROM Matches WHERE time > 1691125718 "
-            "AND gametype = 'Ranked'"
-        ))
-        tower_count = cursor.fetchone()[0]
-        cursor.execute((
-            "SELECT "
-                f"SUM(CASE WHEN user_tower_1 = '{tower}' THEN 1 ELSE 0 END) +"
-                f"SUM(CASE WHEN user_tower_2 = '{tower}' THEN 1 ELSE 0 END) +"
-                f"SUM(CASE WHEN user_tower_3 = '{tower}' THEN 1 ELSE 0 END) AS total_farms "
-            "FROM Matches WHERE time > 1691125718 "
-            "AND gametype = 'Ranked' "
-            "AND user_outcome = 'win'"
-        ))
-        tower_wins = cursor.fetchone()[0]
+        cursor.execute(
+            f"SELECT "
+            f"SUM(CASE WHEN user_tower_1 = '{tower}' THEN 1 ELSE 0 END) + "
+            f"SUM(CASE WHEN user_tower_2 = '{tower}' THEN 1 ELSE 0 END) + "
+            f"SUM(CASE WHEN user_tower_3 = '{tower}' THEN 1 ELSE 0 END) AS total_farms, "
+            f"SUM(CASE WHEN user_tower_1 = '{tower}' AND user_outcome = 'win' THEN 1 ELSE 0 END) + "
+            f"SUM(CASE WHEN user_tower_2 = '{tower}' AND user_outcome = 'win' THEN 1 ELSE 0 END) + "
+            f"SUM(CASE WHEN user_tower_3 = '{tower}' AND user_outcome = 'win' THEN 1 ELSE 0 END) AS total_wins "
+            f"FROM Matches WHERE time > 1691125718 AND gametype = 'Ranked'"
+        )
+        row = cursor.fetchone()
+        tower_count = row[0]
+        tower_wins = row[1]
         tower_counts[tower] = {"games": tower_count, "wins": tower_wins}
     cursor.close()
     conn.close()
-    return jsonify({'tower counts': tower_counts})
+    return jsonify(tower_counts)
 # Background task to update databases every minute
 def update_databases_task():
     update_databases()
