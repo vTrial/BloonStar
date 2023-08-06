@@ -1,14 +1,6 @@
 <script>
-	import TowersData from './towersData.svelte';
+	import TableStatsWhole from './TableStatsWhole.svelte';
 </script>
 
-<table id="table-container">
-	<tr>
-		<th>Tower name</th>
-		<th>Matches</th>
-		<th>Wins</th>
-		<th>Use rate</th>
-		<th>Win rate</th>
-	</tr>
-	<TowersData />
-</table>
+<TableStatsWhole datatype="towers" />
+<TableStatsWhole datatype="heroes" />
