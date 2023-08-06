@@ -1,23 +1,50 @@
-# datachipper
- Battles 2 stats website
+# DataChipper - Battles 2 Stats Website
 
-## What is used for each section:
-Database: sqlite3 (python)
-Backend: Flask (python)
-Frontend: Svelte
+DataChipper is a Battles 2 statistics website that provides insights into the game's data.
 
-## How to operate
-1. Set up backend + database
-    - pip install -r requirements.txt
-    - cd backend
-    - python3 backend.py
-The backend should be hosted at http://localhost:5000/
+## Local Test Guide
 
-2. Set up frontend
-    - cd frontend
-    - npm install
-    - npm run dev
-The backend should be hosted at http://localhost:5173/
+### Set up Backend and Database
 
-## Things to keep in mind
-- nk api only has max 120 requests/minute. Refrain from opening b2.lol when using this program.
+1. Install the required dependencies by running:
+   ```
+   pip install -r requirements.txt
+   ```
+2. Navigate to the `backend` directory:
+   ```
+   cd backend
+   ```
+3. Run the backend server:
+   ```
+   python3 backend.py
+   ```
+   The backend should now be hosted at http://localhost:5000/
+
+### Set up Frontend
+
+1. Download Node.js and npm if you haven't already.
+2. Navigate to the `frontend` directory:
+   ```
+   cd frontend
+   ```
+3. Install the frontend dependencies:
+   ```
+   npm install
+   ```
+4. Run the development server:
+   ```
+   npm run dev
+   ```
+   The frontend should now be hosted at http://localhost:5173/
+
+## Technologies Used
+
+- Database: sqlite3 (Python)
+- Backend: Flask (Python)
+- Frontend: Svelte
+
+## Contributing Guidelines
+
+If you would like to contribute, check out the list of tasks on our [Trello board](https://trello.com/b/vehRNHP6/datachipper). Feel free to pick up a task and start contributing to the project!
+
+Thank you for your interest in DataChipper! We welcome your contributions to make the Battles 2 stats website even better.
