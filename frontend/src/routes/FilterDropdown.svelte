@@ -18,3 +18,10 @@
     <option value={filter[0]}>{filter[1]}</option>
   {/each}
 </select>
+
+<style>
+  .filter-dropdown {
+    padding: 0.5em 4em 0.5em 0.5em;
+    font-size: 1em;
+  }
+</style>
