@@ -78,7 +78,6 @@ def fillMatchesDb():
             )
 
             cursor.execute(insert_query, insert_vals)
-        print(user_id)
         time.sleep(0.6)
     conn.commit()
     cursor.close()
