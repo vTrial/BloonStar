@@ -1,44 +1,48 @@
 <script>
-	import { onMount } from 'svelte';
+  import { onMount, beforeUpdate } from "svelte"
+  export let datatype
+  export let map
+  let endpoint = `http://localhost:5000/${datatype}/get/${map}`
+  let total_games = 1
+  let dataList = []
+  const fetchData = async () => {
+    const response = await fetch(endpoint)
+    const dataJson = await response.json()
+    dataList = Object.entries(dataJson).map(([name, stats]) => ({
+      name,
+      ...stats,
+    }))
+    dataList.sort((a, b) => b.games - a.games)
+    total_games = dataList.reduce((total, data) => total + data.games, 0)
+    if (datatype == "towers") total_games /= 3
+  }
+  const to_percent = (num) => {
+    return (num * 100).toFixed(1) + "%"
+  }
 
-	export let datatype;
+  onMount(() => {
+    fetchData()
+  })
 
-	const get_fetch = async (url) => {
-		const res = await fetch(url);
-		if (res.ok) {
-			return await res.json();
-		} else {
-			throw new Error(`Failed to fetch data from: ${url}`);
-		}
-	};
+  let prevMap = map
 
-	const to_percent = (num) => {
-		return (num * 100).toFixed(1) + '%';
-	};
-
-	let dataList;
-	let matchCount;
-
-	onMount(async () => {
-		try {
-			dataList = await get_fetch(`http://localhost:5000/${datatype}/get`);
-			matchCount = await get_fetch('http://localhost:5000/matches/count');
-			dataList = Object.entries(dataList);
-			dataList.sort((a, b) => b[1].games - a[1].games);
-		} catch (error) {
-			console.error(error);
-		}
-	});
+  beforeUpdate(() => {
+    if (map !== prevMap) {
+      prevMap = map
+      endpoint = `http://localhost:5000/${datatype}/get/${map}`
+      fetchData()
+    }
+  })
 </script>
 
-{#if dataList && matchCount}
-	{#each dataList as data}
-		<tr>
-			<td>{data[0]}</td>
-			<td>{data[1]['games']}</td>
-			<td>{data[1]['wins']}</td>
-			<td>{to_percent(data[1]['games'] / matchCount)}</td>
-			<td>{to_percent(data[1]['wins'] / data[1]['games'])}</td>
-		</tr>
-	{/each}
+{#if dataList}
+  {#each dataList as data}
+    <tr>
+      <td>{data["name"]}</td>
+      <td>{data["games"]}</td>
+      <td>{data["wins"]}</td>
+      <td>{to_percent(data["games"] / total_games)}</td>
+      <td>{to_percent(data["wins"] / data["games"])}</td>
+    </tr>
+  {/each}
 {/if}
