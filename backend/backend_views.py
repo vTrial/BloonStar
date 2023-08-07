@@ -84,11 +84,15 @@ def get_matches_count():
 
     return jsonify(matches)
 
-def get_towers():
+def get_towers(match_map):
     # Route to get tower data
     with sql.connect(db_fns.get_b2_db_filepath()) as conn:
         cursor = conn.cursor()
         tower_counts = {}
+        
+        map_condition = f"AND map = '{match_map}'" if match_map else ""
+        time_condition = "AND time > 1691125718"
+        
         for tower in towers:
             cursor.execute(
                 f"SELECT "
@@ -98,7 +102,7 @@ def get_towers():
                 f"SUM(CASE WHEN user_tower_1 = '{tower}' AND user_outcome = 'win' THEN 1 ELSE 0 END) + "
                 f"SUM(CASE WHEN user_tower_2 = '{tower}' AND user_outcome = 'win' THEN 1 ELSE 0 END) + "
                 f"SUM(CASE WHEN user_tower_3 = '{tower}' AND user_outcome = 'win' THEN 1 ELSE 0 END) AS total_tower_wins "
-                f"FROM Matches WHERE time > 1691125718 AND gametype = 'Ranked'"
+                f"FROM Matches WHERE gametype = 'Ranked' {time_condition} {map_condition}"
             )
             row = cursor.fetchone()
             tower_count = row[0]
@@ -107,17 +111,19 @@ def get_towers():
 
     return jsonify(tower_counts)
 
-def get_heroes():
+def get_heroes(match_map):
     # Route to get hero data
     with sql.connect(db_fns.get_b2_db_filepath()) as conn:
         cursor = conn.cursor()
         hero_counts = {}
+        map_condition = f"AND map = '{match_map}'" if match_map else ""
+        time_condition = "AND time > 1691125718"
         for hero in heroes:
             cursor.execute(
                 f"SELECT "
                 f"SUM(CASE WHEN user_hero = '{hero}' THEN 1 ELSE 0 END) AS total_hero, "
                 f"SUM(CASE WHEN user_hero = '{hero}' AND user_outcome = 'win' THEN 1 ELSE 0 END) AS total_hero_wins "
-                f"FROM Matches WHERE time > 1691125718 AND gametype = 'Ranked'"
+                f"FROM Matches WHERE gametype = 'Ranked' {time_condition} {map_condition}"
             )
             row = cursor.fetchone()
             hero_count = row[0]
@@ -125,3 +131,4 @@ def get_heroes():
             hero_counts[hero] = {"games": hero_count, "wins": hero_wins}
 
     return jsonify(hero_counts)
+
