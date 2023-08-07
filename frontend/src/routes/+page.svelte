@@ -28,9 +28,10 @@
   }
 </script>
 
+<Nav />
 <FilterDropdown
   on:filterChanged={handleFilterChanged}
   filterList={mapsFilters}
 />
 <TableStatsWhole datatype="towers" map={selectedMap} />
-<TableStatsWhole datatype="heroes" map={selectedMap} />
+<!-- <TableStatsWhole datatype="heroes" map={selectedMap} /> -->

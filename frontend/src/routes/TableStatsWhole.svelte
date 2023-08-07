@@ -5,7 +5,18 @@
   export let map
 </script>
 
-<table id="table-container">
+<div class="table-stats-whole">
   <TableStatsHeader {datatype} />
   <TableStatsData {datatype} {map} />
-</table>
+</div>
+
+<style>
+  .table-stats-whole {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 20px; /* Gap between items */
+    padding: 20px; /* Add some padding around the grid */
+    background-color: #f0f0f0; /* Add a background color for the container */
+    border-radius: 10px; /* Rounded corners */
+  }
+</style>

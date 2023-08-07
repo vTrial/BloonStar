@@ -37,12 +37,15 @@
 
 {#if dataList}
   {#each dataList as data}
-    <tr>
-      <td>{data["name"]}</td>
-      <td>{data["games"]}</td>
-      <td>{data["wins"]}</td>
-      <td>{to_percent(data["games"] / total_games)}</td>
-      <td>{to_percent(data["wins"] / data["games"])}</td>
-    </tr>
+    <div class="table-data">{data["name"]}</div>
+    <div class="table-data">{data["games"]}</div>
+    <div class="table-data">{to_percent(data["games"] / total_games)}</div>
+    <div class="table-data">{to_percent(data["wins"] / data["games"])}</div>
   {/each}
 {/if}
+
+<style>
+  .table-data {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+</style>
