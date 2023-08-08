@@ -1,7 +1,7 @@
 <script>
-  import FilterDropdown from "./FilterDropdown.svelte"
-  import Nav from "./Nav.svelte"
-  import TableStatsWhole from "./TableStatsWhole.svelte"
+  import FilterDropdown from "./../FilterDropdown.svelte"
+  import Nav from "./../Nav.svelte"
+  import TableStatsWhole from "./../TableStatsWhole.svelte"
 
   const mapsFilters = [
     ["", "All Maps"],
@@ -29,3 +29,8 @@
 </script>
 
 <Nav />
+<FilterDropdown
+  on:filterChanged={handleFilterChanged}
+  filterList={mapsFilters}
+/>
+<TableStatsWhole datatype="heroes" map={selectedMap} />
