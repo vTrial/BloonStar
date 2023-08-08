@@ -2,6 +2,7 @@
   import { onMount, beforeUpdate } from "svelte"
   export let datatype
   export let map
+  export let thingNames
   let endpoint = `http://localhost:5000/${datatype}/get/${map}`
   let total_games = 1
   let dataList = []
@@ -37,7 +38,7 @@
 
 {#if dataList}
   {#each dataList as data}
-    <div class="table-data">{data["name"]}</div>
+    <div class="table-data">{thingNames[data["name"]]}</div>
     <div class="table-data">{data["games"]}</div>
     <div class="table-data">{to_percent(data["games"] / total_games)}</div>
     <div class="table-data">{to_percent(data["wins"] / data["games"])}</div>

@@ -3,7 +3,6 @@
   const dispatch = createEventDispatcher()
   export let filterList = []
   let selectedFilter = ""
-
   const changedFilter = () => {
     dispatch("filterChanged", selectedFilter)
   }
