@@ -1,7 +1,13 @@
 <nav>
-  <div>Home</div>
-  <div>Towers</div>
-  <div>Heroes</div>
+  <div>
+    <a href="/">Home</a>
+  </div>
+  <div>
+    <a href="/towers">Towers</a>
+  </div>
+  <div>
+    <a href="/heroes">Heroes</a>
+  </div>
 </nav>
 
 <style>
@@ -12,5 +18,13 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1em;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    font-weight: bold;
+  }
+  a,
+  a:visited,
+  a:hover,
+  a:active {
+    color: inherit;
+    text-decoration: none;
   }
 </style>
