@@ -54,9 +54,9 @@ def fillMatchesDb():
             opp_id = db_fns.profile_url_to_id(opp_side["profileURL"])
             match_map = user_match["map"]
             match_gametype = user_match["gametype"]
-            user_tower_1, user_tower_2, user_tower_3 = user_side["towerone"], user_side["towertwo"], user_side["towerthree"]
+            user_tower_1, user_tower_2, user_tower_3 = sorted([user_side["towerone"], user_side["towertwo"], user_side["towerthree"]])
             user_hero = user_side["hero"]
-            opp_tower_1, opp_tower_2, opp_tower_3 = opp_side["towerone"], opp_side["towertwo"], opp_side["towerthree"]
+            opp_tower_1, opp_tower_2, opp_tower_3 = sorted([opp_side["towerone"], opp_side["towertwo"], opp_side["towerthree"]])
             opp_hero = opp_side["hero"]
             user_outcome = user_side["result"]
             match_duration = user_match["duration"]
