@@ -3,11 +3,12 @@
   import TableStatsHeader from "./TableStatsHeader.svelte"
   export let datatype
   export let map
+  export let thingNames
 </script>
 
 <div class="table-stats-whole">
   <TableStatsHeader {datatype} />
-  <TableStatsData {datatype} {map} />
+  <TableStatsData {datatype} {map} {thingNames} />
 </div>
 
 <style>
