@@ -18,6 +18,7 @@ def update_databases():
     # Function to update the databases.
     with db_lock:
         # Create and/or fill players database table
+        print("creating players db")
         players_db.createPlayersDb()
         players_db.fillPlayersDb()
         print("created players")

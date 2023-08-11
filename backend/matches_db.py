@@ -42,18 +42,25 @@ def fillMatchesDb():
     conn = sql.connect(db_fns.get_b2_db_filepath())
     cursor = conn.cursor()
     user_ids = cursor.execute("SELECT user_id from players").fetchall()
+    # select has funny output; change to 1d list in next line
+    user_ids = [user_id for sublist in user_ids for user_id in sublist]
     for user_id in user_ids:
-        user_id = user_id[0]
         # consider using sqlite native option?
         time_of_match = int(time.time())
         user_matches_url = f"https://data.ninjakiwi.com/battles2/users/{user_id}/matches"
         user_matches_json = requests.request("GET", user_matches_url).json()
         for user_match in user_matches_json["body"]:
             user_side = user_match["playerLeft"] if user_match['playerLeft']['currentUser'] else user_match["playerRight"]
-            opp_side = user_match["playerLeft"] if not user_match['playerLeft']['currentUser'] else user_match["playerRight"]
-            opp_id = db_fns.profile_url_to_id(opp_side["profileURL"])
             match_map = user_match["map"]
             match_gametype = user_match["gametype"]
+            if (match_gametype != "Ranked"):
+                continue
+            opp_side = user_match["playerLeft"] if not user_match['playerLeft']['currentUser'] else user_match["playerRight"]
+            opp_id = db_fns.profile_url_to_id(opp_side["profileURL"])
+            if opp_id not in user_ids:
+                print(opp_id + " not in the database")
+                # if opp not in hom, move to next person
+                break
             user_tower_1, user_tower_2, user_tower_3 = sorted([user_side["towerone"], user_side["towertwo"], user_side["towerthree"]])
             user_hero = user_side["hero"]
             opp_tower_1, opp_tower_2, opp_tower_3 = sorted([opp_side["towerone"], opp_side["towertwo"], opp_side["towerthree"]])
