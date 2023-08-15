@@ -38,7 +38,7 @@ def update_databases_task():
 schedule.every(60).minutes.do(update_databases)
 
 # endpoints
-app.add_url_rule('/users', view_func=backend_views.get_users)
+# app.add_url_rule('/users', view_func=backend_views.get_users)
 app.add_url_rule('/matches', view_func=backend_views.get_matches)
 app.add_url_rule('/matches/count', view_func=backend_views.get_matches_count)
 app.add_url_rule('/towers/get/', defaults={'match_map': ""}, view_func=backend_views.get_towers)
