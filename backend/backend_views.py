@@ -64,8 +64,7 @@ def get_matches():
         cursor = conn.cursor()
         cursor.execute((
             "SELECT * FROM matches "
-            "WHERE time > 1691125718 "
-            "AND gametype = 'Ranked'"
+            "WHERE gametype = 'Ranked'"
         ))
         matches = cursor.fetchall()
 
@@ -92,16 +91,23 @@ def get_towers(match_map):
         
         map_condition = f"AND map = '{match_map}'" if match_map else ""
         time_condition = "AND time > 1691125718"
-        
+
+
         for tower in towers:
             cursor.execute(
                 f"SELECT "
-                f"SUM(CASE WHEN user_tower_1 = '{tower}' THEN 1 ELSE 0 END) + "
-                f"SUM(CASE WHEN user_tower_2 = '{tower}' THEN 1 ELSE 0 END) + "
-                f"SUM(CASE WHEN user_tower_3 = '{tower}' THEN 1 ELSE 0 END) AS total_tower, "
-                f"SUM(CASE WHEN user_tower_1 = '{tower}' AND user_outcome = 'win' THEN 1 ELSE 0 END) + "
-                f"SUM(CASE WHEN user_tower_2 = '{tower}' AND user_outcome = 'win' THEN 1 ELSE 0 END) + "
-                f"SUM(CASE WHEN user_tower_3 = '{tower}' AND user_outcome = 'win' THEN 1 ELSE 0 END) AS total_tower_wins "
+                f"SUM(CASE WHEN left_tower_1 = '{tower}' THEN 1 ELSE 0 END) + "
+                f"SUM(CASE WHEN left_tower_2 = '{tower}' THEN 1 ELSE 0 END) + "
+                f"SUM(CASE WHEN left_tower_3 = '{tower}' THEN 1 ELSE 0 END) + "
+                f"SUM(CASE WHEN right_tower_1 = '{tower}' THEN 1 ELSE 0 END) + "
+                f"SUM(CASE WHEN right_tower_2 = '{tower}' THEN 1 ELSE 0 END) + "
+                f"SUM(CASE WHEN right_tower_3 = '{tower}' THEN 1 ELSE 0 END) AS total_tower, "
+                f"SUM(CASE WHEN left_tower_1 = '{tower}' AND left_outcome = 'win' THEN 1 ELSE 0 END) + "
+                f"SUM(CASE WHEN left_tower_2 = '{tower}' AND left_outcome = 'win' THEN 1 ELSE 0 END) + "
+                f"SUM(CASE WHEN left_tower_3 = '{tower}' AND left_outcome = 'win' THEN 1 ELSE 0 END) + "
+                f"SUM(CASE WHEN right_tower_1 = '{tower}' AND left_outcome = 'lose' THEN 1 ELSE 0 END) + "
+                f"SUM(CASE WHEN right_tower_2 = '{tower}' AND left_outcome = 'lose' THEN 1 ELSE 0 END) + "
+                f"SUM(CASE WHEN right_tower_3 = '{tower}' AND left_outcome = 'lose' THEN 1 ELSE 0 END) AS total_tower_wins "
                 f"FROM Matches WHERE gametype = 'Ranked' {time_condition} {map_condition}"
             )
             row = cursor.fetchone()
@@ -121,8 +127,10 @@ def get_heroes(match_map):
         for hero in heroes:
             cursor.execute(
                 f"SELECT "
-                f"SUM(CASE WHEN user_hero = '{hero}' THEN 1 ELSE 0 END) AS total_hero, "
-                f"SUM(CASE WHEN user_hero = '{hero}' AND user_outcome = 'win' THEN 1 ELSE 0 END) AS total_hero_wins "
+                f"SUM(CASE WHEN left_hero = '{hero}' THEN 1 ELSE 0 END) + "
+                f"SUM(CASE WHEN right_hero = '{hero}' THEN 1 ELSE 0 END) AS total_hero, "
+                f"SUM(CASE WHEN left_hero = '{hero}' AND left_outcome = 'win' THEN 1 ELSE 0 END) +"
+                f"SUM(CASE WHEN right_hero = '{hero}' AND left_outcome = 'lose' THEN 1 ELSE 0 END) AS total_hero_wins "
                 f"FROM Matches WHERE gametype = 'Ranked' {time_condition} {map_condition}"
             )
             row = cursor.fetchone()
