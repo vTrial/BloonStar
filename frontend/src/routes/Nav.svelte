@@ -13,7 +13,7 @@
 <style>
   nav {
     display: grid;
-    background-color: bisque;
+    background-color: #b6c471;
     padding: 1em;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1em;
