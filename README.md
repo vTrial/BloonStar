@@ -1,6 +1,6 @@
-# DataChipper - Battles 2 Stats Website
+# Bloonstar - Battles 2 Stats Website
 
-DataChipper is a Battles 2 statistics website that provides insights into the game's data.
+Bloonstar is a Battles 2 statistics website that provides insights into the game's data.
 
 ## Local Test Guide
 
@@ -45,6 +45,6 @@ DataChipper is a Battles 2 statistics website that provides insights into the ga
 
 ## Contributing Guidelines
 
-If you would like to contribute, check out the list of tasks on our [Trello board](https://trello.com/b/vehRNHP6/datachipper). Feel free to pick up a task and start contributing to the project!
+If you would like to contribute, check out the list of tasks on our [Trello board](https://trello.com/b/vehRNHP6/bloonstar). Feel free to pick up a task and start contributing to the project!
 
-Thank you for your interest in DataChipper! We welcome your contributions to make the Battles 2 stats website even better.
+Thank you for your interest in Bloonstar! We welcome your contributions to make the Battles 2 stats website even better.
