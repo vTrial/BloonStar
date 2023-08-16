@@ -1,0 +1,20 @@
+@font-face {
+    font-family: "Montserrat-SemiBold"; /* Define a font family name */
+    src: url("/fonts/Montserrat-SemiBold.ttf") format("truetype"); /* Path to your font file */
+  }
+
+@font-face {
+font-family: "Montserrat-Regular"; /* Define a font family name */
+src: url("/fonts/Montserrat-Regular.ttf") format("truetype"); /* Path to your font file */
+}
+
+* {
+	font-family: Montserrat-Regular, Arial, Helvetica, sans-serif;
+}
+a,
+a:visited,
+a:hover,
+a:active {
+	color: inherit;
+	text-decoration: none;
+}

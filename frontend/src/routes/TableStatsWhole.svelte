@@ -19,5 +19,6 @@
     padding: 20px; /* Add some padding around the grid */
     background-color: #f0f0f0; /* Add a background color for the container */
     border-radius: 10px; /* Rounded corners */
+    margin: 1em;
   }
 </style>
