@@ -1,9 +1,9 @@
 import requests
-import db_fns
+import bs_fns
 
 # create users db if doesn't exist
-def createHomUsersDb():
-	conn = db_fns.get_database_connection()
+def create():
+	conn = bs_fns.db_conn()
 	with conn:
 		with conn.cursor() as cur:
 			cur.execute((
@@ -18,12 +18,12 @@ def createHomUsersDb():
 	conn.close()
 
 
-def fillHomUsersDb():
+def fill():
 	# change season every season
-	conn = db_fns.get_database_connection()
-	season = 14
+	conn = bs_fns.db_conn()
+	season = bs_fns.current_season()
 	print("filling hom users db")
-	lb_total_pages = db_fns.get_lb_total_pages(season)
+	lb_total_pages = bs_fns.lb_total_pages(season)
 	with conn:
 		with conn.cursor() as cur:
 			for lb_page_num in range(1, lb_total_pages + 1):
@@ -31,7 +31,7 @@ def fillHomUsersDb():
 				lb_json = requests.request("GET", lb_url).json()
 				if lb_json["success"]:
 					for user in lb_json["body"]:
-						user_id = db_fns.profile_url_to_id(user["profile"])
+						user_id = bs_fns.profile_url_to_id(user["profile"])
 						insert_query = (
 							"insert into hom_users (season, user_id, score) "
 							"values (%s, %s, %s)"

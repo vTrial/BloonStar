@@ -14,9 +14,17 @@ Bloonstar is a Battles 2 statistics website that provides insights into the game
    ```
    cd backend
    ```
-3. Run the backend server:
+3. Set up a postgres database. Download [here](https://www.postgresql.org/) if you do not have postgres.
+4. In the backend file, create an env file. Below is the format:
    ```
-   python3 backend.py
+   DB_NAME=""
+   DB_USER=""
+   DB_PASSWORD=""
+   ```
+   Fill in this .env file with postgres credentials.
+5. Run the backend server:
+   ```
+   python backend.py
    ```
    The backend should now be hosted at http://localhost:5000/
 
@@ -39,7 +47,7 @@ Bloonstar is a Battles 2 statistics website that provides insights into the game
 
 ## Technologies Used
 
-- Database: sqlite3 (Python)
+- Database: postgres (Python)
 - Backend: Flask (Python)
 - Frontend: Svelte
 

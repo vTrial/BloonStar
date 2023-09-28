@@ -1,11 +1,10 @@
 import requests
 import time
-import pandas as pd
 
-import db_fns
+import bs_fns
 
-def createMatchesDb():
-    conn = db_fns.get_database_connection()
+def create():
+    conn = bs_fns.db_conn()
     with conn:
         with conn.cursor() as cur:
             cursor = conn.cursor()
@@ -35,8 +34,8 @@ def createMatchesDb():
 		
 
 
-def fillMatchesDb():
-    conn = db_fns.get_database_connection()
+def fill():
+    conn = bs_fns.db_conn()
     with conn:
         with conn.cursor() as cur:
             user_ids = cur.execute("select user_id from hom_users where season=14").fetchall()
@@ -51,8 +50,8 @@ def fillMatchesDb():
                 for user_match in user_matches_json["body"]:
                     left_side = user_match["playerLeft"]
                     right_side = user_match["playerRight"]
-                    left_id = db_fns.profile_url_to_id(left_side["profileURL"])
-                    right_id = db_fns.profile_url_to_id(right_side["profileURL"])
+                    left_id = bs_fns.profile_url_to_id(left_side["profileURL"])
+                    right_id = bs_fns.profile_url_to_id(right_side["profileURL"])
                     left_tower_1, left_tower_2, left_tower_3 = sorted([left_side["towerone"], left_side["towertwo"], left_side["towerthree"]])
                     right_tower_1, right_tower_2, right_tower_3 = sorted([right_side["towerone"], right_side["towertwo"], right_side["towerthree"]])
                     insert_query = (
