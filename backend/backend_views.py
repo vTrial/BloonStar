@@ -3,6 +3,9 @@ from flask import jsonify
 import bs_fns
 import b2_consts
 
+def time_query():
+    return f"AND time > {bs_fns.n_days_ago(7)} "
+
 def get_users():
     conn = bs_fns.db_conn()
     with conn:
@@ -35,8 +38,8 @@ def get_matches_count():
         with conn.cursor() as cur:
             cur.execute((
                 "SELECT COUNT(*) FROM matches "
-                "WHERE time > 1691125718 "
-                "AND gametype = 'Ranked'"
+                "WHERE gametype = 'Ranked'"
+                f"{time_query()}"
             ))
             matches = cur.fetchone()[0]
 
@@ -52,8 +55,6 @@ def get_towers(match_map):
             tower_counts = {}
             
             map_condition = f"AND map = '{match_map}'" if match_map else ""
-            time_condition = "AND time > 1691125718"
-
 
             for tower in b2_consts.towers:
                 cur.execute(
@@ -70,7 +71,7 @@ def get_towers(match_map):
                     f"SUM(CASE WHEN right_tower_1 = '{tower}' AND left_outcome = 'lose' THEN 1 ELSE 0 END) + "
                     f"SUM(CASE WHEN right_tower_2 = '{tower}' AND left_outcome = 'lose' THEN 1 ELSE 0 END) + "
                     f"SUM(CASE WHEN right_tower_3 = '{tower}' AND left_outcome = 'lose' THEN 1 ELSE 0 END) AS total_tower_wins "
-                    f"FROM Matches WHERE gametype = 'Ranked' {time_condition} {map_condition}"
+                    f"FROM Matches WHERE gametype = 'Ranked' {time_query()} {map_condition}"
                 )
                 row = cur.fetchone()
                 tower_count = row[0]
@@ -88,7 +89,6 @@ def get_heroes(match_map):
         with conn.cursor() as cur:
             hero_counts = {}
             map_condition = f"AND map = '{match_map}'" if match_map else ""
-            time_condition = "AND time > 1691125718"
             for hero in b2_consts.heroes:
                 cur.execute(
                     f"SELECT "
@@ -96,7 +96,7 @@ def get_heroes(match_map):
                     f"SUM(CASE WHEN right_hero = '{hero}' THEN 1 ELSE 0 END) AS total_hero, "
                     f"SUM(CASE WHEN left_hero = '{hero}' AND left_outcome = 'win' THEN 1 ELSE 0 END) +"
                     f"SUM(CASE WHEN right_hero = '{hero}' AND left_outcome = 'lose' THEN 1 ELSE 0 END) AS total_hero_wins "
-                    f"FROM Matches WHERE gametype = 'Ranked' {time_condition} {map_condition}"
+                    f"FROM Matches WHERE gametype = 'Ranked' {time_query()} {map_condition}"
                 )
                 row = cur.fetchone()
                 hero_count = row[0]
