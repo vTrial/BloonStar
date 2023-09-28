@@ -2,3 +2,4 @@ backend/*b2db.db
 backend/b2db.db-journal
 backend/__pycache__
 backend/editDb.py
+backend/.env
