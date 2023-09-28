@@ -1,2 +1,0 @@
-things to do:
-1. clean up players_db and matches_db w/ chatgpt

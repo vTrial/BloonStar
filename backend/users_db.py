@@ -1,8 +1,8 @@
-import db_fns
+import bs_fns
 import requests
 
-def createUsersDb():
-	conn = db_fns.get_database_connection()
+def create():
+	conn = bs_fns.db_conn()
 	with conn:
 		with conn.cursor() as cur:
 			cur.execute((
@@ -13,13 +13,13 @@ def createUsersDb():
 			))
 	conn.close()
 
-def fillUsersDb():
+def fill():
 	# change season every season
-	season = 14
+	season = bs_fns.current_season()
 	print("filling users db")
-	lb_total_pages = db_fns.get_lb_total_pages(season)
+	lb_total_pages = bs_fns.lb_total_pages(season)
 	
-	conn = db_fns.get_database_connection()
+	conn = bs_fns.db_conn()
 	with conn:
 		with conn.cursor() as cur:
 			for lb_page_num in range(1, lb_total_pages + 1):
@@ -27,7 +27,7 @@ def fillUsersDb():
 				lb_json = requests.request("GET", lb_url).json()
 				if lb_json["success"]:
 					for user in lb_json["body"]:
-						user_id = db_fns.profile_url_to_id(user["profile"])
+						user_id = bs_fns.profile_url_to_id(user["profile"])
 						insert_query = (
 							"insert into users (id, name) "
 							"values (%s, %s) "

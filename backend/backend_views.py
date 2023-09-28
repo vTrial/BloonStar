@@ -1,10 +1,10 @@
 from flask import jsonify
 
-import db_fns
+import bs_fns
 import b2_consts
 
 def get_users():
-    conn = db_fns.get_database_connection()
+    conn = bs_fns.db_conn()
     with conn:
         with conn.cursor() as cur:
             cur.execute("SELECT * FROM players")
@@ -15,7 +15,7 @@ def get_users():
 
 def get_matches():
     # Route to get match data
-    conn = db_fns.get_database_connection()
+    conn = bs_fns.db_conn()
     with conn:
         with conn.cursor() as cur:
             cur.execute((
@@ -30,7 +30,7 @@ def get_matches():
 
 def get_matches_count():
     # Route to get the count of matches
-    conn = db_fns.get_database_connection()
+    conn = bs_fns.db_conn()
     with conn:
         with conn.cursor() as cur:
             cur.execute((
@@ -46,7 +46,7 @@ def get_matches_count():
 
 def get_towers(match_map):
     # Route to get tower data
-    conn = db_fns.get_database_connection()
+    conn = bs_fns.db_conn()
     with conn:
         with conn.cursor() as cur:
             tower_counts = {}
@@ -83,7 +83,7 @@ def get_towers(match_map):
 
 def get_heroes(match_map):
     # Route to get hero data
-    conn = db_fns.get_database_connection()
+    conn = bs_fns.db_conn()
     with conn:
         with conn.cursor() as cur:
             hero_counts = {}
