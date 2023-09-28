@@ -3,6 +3,7 @@ import psycopg
 import dotenv
 import requests
 import re
+import time
 
 # get current season. Uses 1 api call
 def current_season():
@@ -60,3 +61,8 @@ def db_conn():
 	except psycopg.Error as e:
 		print("Error connecting to the database:", e)
 		return None
+
+def n_days_ago(n):
+	now_time = int(time.time())
+	past_time = now_time - 86400 * n
+	return past_time
