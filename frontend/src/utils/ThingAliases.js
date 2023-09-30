@@ -15,6 +15,7 @@ export const mapNames = [
   ["ports", "Ports"],
   ["sands_of_time", "Sands of Time"],
   ["star", "Star"],
+  ["pirate_cove", "Pirate Cove"],
 ]
 
 export const towerNames = {
