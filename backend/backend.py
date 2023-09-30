@@ -14,12 +14,3 @@ app.add_url_rule('/towers/get/', defaults={'match_map': ""}, view_func=backend_v
 app.add_url_rule('/towers/get/<match_map>', view_func=backend_views.get_towers)
 app.add_url_rule('/heroes/get/', defaults={'match_map': ""}, view_func=backend_views.get_heroes)
 app.add_url_rule('/heroes/get/<match_map>', view_func=backend_views.get_heroes)
-
-if __name__ == '__main__':
-    try:
-
-        # Run the Flask app
-        app.run(debug=True)
-    except KeyboardInterrupt:
-        # Handle keyboard interrupt (Ctrl+C) to exit the program gracefully.
-        print("Keyboard interrupt received. Exiting...")
