@@ -29,14 +29,15 @@ export const GET = async ({ url }) => {
     "EngineerMonkey",
   ]
   // Iterate over tower names from b2_consts.towers
-  for (const tower of towers) {
-    // Create a Supabase query to fetch tower data
-    // Execute the query and retrieve the result
+  const towerPromises = towers.map(async (tower) => {
     const { data, error } = await supabase.rpc("tower_totals", {
       tower: tower,
       map_name: map_name,
     })
     tower_counts[tower] = data[0]
-  }
+  })
+
+  await Promise.all(towerPromises)
+
   return new Response(JSON.stringify(tower_counts))
 }
