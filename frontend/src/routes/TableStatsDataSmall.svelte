@@ -3,7 +3,7 @@
   export let datatype
   export let map
   export let thingNames
-  let endpoint = `http://localhost:5000/${datatype}/get/${map}`
+  let endpoint = `/api/get/${datatype}?map=${map}`
   let total_games = 1
   let dataList = []
   const fetchData = async () => {
@@ -31,7 +31,7 @@
   beforeUpdate(() => {
     if (map !== prevMap) {
       prevMap = map
-      endpoint = `http://localhost:5000/${datatype}/get/${map}`
+      endpoint = `/api/get/${datatype}?map=${map}`
       fetchData()
     }
   })
