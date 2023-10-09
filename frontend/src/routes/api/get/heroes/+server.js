@@ -24,15 +24,15 @@ export const GET = async ({ url }) => {
     "Agent_Jericho",
     "Highwayman_Jericho",
   ]
-  // Iterate over hero names from b2_consts.heroes
-  for (const hero of heroes) {
-    // Create a Supabase query to fetch hero data
-    // Execute the query and retrieve the result
+
+  const heroPromises = heroes.map(async (hero) => {
     const { data, error } = await supabase.rpc("hero_totals", {
       hero: hero,
       map_name: map_name,
     })
     hero_counts[hero] = data[0]
-  }
+  })
+
+  await Promise.all(heroPromises)
   return new Response(JSON.stringify(hero_counts))
 }
