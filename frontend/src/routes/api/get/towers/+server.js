@@ -1,34 +1,12 @@
 import { supabase } from "$lib/supabaseClient"
 import { pastTime } from "$lib/sevenDaysAgo"
+import { towerNames } from "$lib/ThingAliases"
 
 export const GET = async ({ url }) => {
+  const towers = Object.keys(towerNames)
   const map_name = url.searchParams.get("map") ?? ""
   // Define tower_counts object to store tower data
   const tower_counts = {}
-  const towers = [
-    "DartMonkey",
-    "BoomerangMonkey",
-    "BombShooter",
-    "TackShooter",
-    "IceMonkey",
-    "GlueGunner",
-    "SniperMonkey",
-    "MonkeySub",
-    "MonkeyBuccaneer",
-    "MonkeyAce",
-    "HeliPilot",
-    "MortarMonkey",
-    "DartlingGunner",
-    "WizardMonkey",
-    "SuperMonkey",
-    "NinjaMonkey",
-    "Alchemist",
-    "Druid",
-    "BananaFarm",
-    "SpikeFactory",
-    "MonkeyVillage",
-    "EngineerMonkey",
-  ]
   // Iterate over tower names from b2_consts.towers
   const towerPromises = towers.map(async (tower) => {
     const { data, error } = await supabase.rpc("tower_totals", {
