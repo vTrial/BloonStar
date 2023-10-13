@@ -16,6 +16,7 @@ export const mapNames = [
   ["sands_of_time", "Sands of Time"],
   ["star", "Star"],
   ["pirate_cove", "Pirate Cove"],
+  ["precious_space", "Precious Space"],
 ]
 
 export const towerNames = {
@@ -44,8 +45,6 @@ export const towerNames = {
 }
 
 export const heroNames = {
-  Agent_Jericho: "Agent Jericho",
-  Highwayman_Jericho: "Highwayman Jericho",
   Quincy: "Quincy",
   Gwendolin_Science: "Scientist Gwendolin",
   Churchill_Sentai: "Sentai Churchill",
@@ -62,4 +61,7 @@ export const heroNames = {
   Benjamin: "Benjamin",
   Ezili_SmudgeCat: "Smudge Catt Ezili",
   PatFusty: "Pat Fusty",
+  Jericho: "Agent Jericho",
+  Jericho_Highwayman: "Highwayman Jericho",
+  Jericho_StarCaptain: "Star Captain Jericho",
 }
