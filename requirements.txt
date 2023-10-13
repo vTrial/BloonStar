@@ -1,5 +1,7 @@
 requests
 schedule
-flask
-flask-cors
-psycopg[binary,pool]
+supabase
+pandas
+aiolimiter
+httpx
+python-dotenv

@@ -1,4 +1,5 @@
 import { supabase } from "$lib/supabaseClient"
+import { pastTime } from "$lib/sevenDaysAgo"
 
 export const GET = async ({ url }) => {
   const map_name = url.searchParams.get("map") ?? ""
@@ -33,6 +34,7 @@ export const GET = async ({ url }) => {
     const { data, error } = await supabase.rpc("tower_totals", {
       tower: tower,
       map_name: map_name,
+      time_cutoff: pastTime,
     })
     tower_counts[tower] = data[0]
   })
