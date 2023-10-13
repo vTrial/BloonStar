@@ -1,7 +1,7 @@
 <script>
   import Nav from "./Nav.svelte"
   import TableStatsWholeSmall from "./TableStatsWholeSmall.svelte"
-  import { heroNames, towerNames } from "./../utils/ThingAliases"
+  import { heroNames, towerNames } from "$lib/ThingAliases"
 </script>
 
 <Nav />

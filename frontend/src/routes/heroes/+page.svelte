@@ -2,7 +2,7 @@
   import FilterDropdown from "./../FilterDropdown.svelte"
   import Nav from "./../Nav.svelte"
   import TableStatsWhole from "./../TableStatsWhole.svelte"
-  import { mapNames, heroNames } from "./../../utils/ThingAliases"
+  import { mapNames, heroNames } from "$lib/ThingAliases"
   let selectedMap = ""
 
   function handleFilterChanged(event) {
