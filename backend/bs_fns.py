@@ -1,9 +1,9 @@
 import os
-import psycopg
 import dotenv
 import requests
 import re
 import time
+from supabase import create_client
 
 # get current season. Uses 1 api call
 def current_season():
@@ -46,23 +46,8 @@ def profile_url_to_id(url):
 	user_id = url.split("/")[5]
 	return user_id
 
-# create get season from time function
-dotenv.load_dotenv()
-
-def db_conn():
-	try:
-		# Replace with your database connection details
-		conn = psycopg.connect(
-			dbname=os.getenv('DB_NAME'),
-			user=os.getenv('DB_USER'),
-			password=os.getenv('DB_PASSWORD'),
-		)
-		return conn
-	except psycopg.Error as e:
-		print("Error connecting to the database:", e)
-		return None
-
-def n_days_ago(n):
-	now_time = int(time.time())
-	past_time = now_time - 86400 * n
-	return past_time
+def supabase_auth():
+	dotenv.load_dotenv()
+	url = os.getenv('SUPABASE_URL')
+	key = os.getenv("SUPABASE_API_KEY")
+	return create_client(url, key)
