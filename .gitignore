@@ -1,6 +1,5 @@
-backend/*b2db.db
-backend/b2db.db-journal
-backend/__pycache__
-backend/.env
+node_modules
+.svelte-kit
+__pycache__
 .DS_Store
 .env

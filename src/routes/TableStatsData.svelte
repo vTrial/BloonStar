@@ -37,7 +37,7 @@
 </script>
 
 {#if dataList}
-  {#each dataList as data}
+  {#each dataList as data, index}
     <div class="table-data">{thingNames[data["name"]]}</div>
     <div class="table-data">{data["games"]}</div>
     <div class="table-data">{to_percent(data["games"] / total_games)}</div>

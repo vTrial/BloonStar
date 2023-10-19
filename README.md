@@ -1,58 +1,13 @@
 # Bloonstar - Battles 2 Stats Website
 
-Bloonstar is a Battles 2 statistics website that provides insights into the game's data.
+Bloonstar is a Battles 2 statistics website providing players with hero and tower data accessible [here](https://www.bloonstar.com/).
 
-## Local Test Guide
+If you have any questions or have feedback, message vTri on Discord.
 
-### Set up Backend and Database
+The website as of current takes much tinkering for local development. We'll get that fixed as soon as possible
+How to run a very bad version of this code:
 
-1. Install the required dependencies by running:
-   ```
-   pip install -r requirements.txt
-   ```
-2. Navigate to the `backend` directory:
-   ```
-   cd backend
-   ```
-3. Set up a postgres database. Download [here](https://www.postgresql.org/) if you do not have postgres.
-4. In the backend file, create an env file. Below is the format:
-   ```
-   DB_NAME=""
-   DB_USER=""
-   DB_PASSWORD=""
-   ```
-   Fill in this .env file with postgres credentials.
-5. Run the backend server:
-   ```
-   python backend.py
-   ```
-   The backend should now be hosted at http://localhost:5000/
-
-### Set up Frontend
-
-1. Download Node.js and npm if you haven't already.
-2. Navigate to the `frontend` directory:
-   ```
-   cd frontend
-   ```
-3. Install the frontend dependencies:
-   ```
-   npm install
-   ```
-4. Run the development server:
-   ```
-   npm run dev
-   ```
-   The frontend should now be hosted at http://localhost:5173/
-
-## Technologies Used
-
-- Database: postgres (Python)
-- Backend: Flask (Python)
-- Frontend: Svelte
-
-## Contributing Guidelines
-
-If you would like to contribute, check out the list of tasks on our [Trello board](https://trello.com/b/vehRNHP6/bloonstar). Feel free to pick up a task and start contributing to the project!
-
-Thank you for your interest in Bloonstar! We welcome your contributions to make the Battles 2 stats website even better.
+1. Download the svelte packages through the command below
+   `npm install`
+2. Locally test using
+   `npm run dev`

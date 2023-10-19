@@ -12,12 +12,19 @@ async def fetch_and_process_match(user_id, supabase, season, user_count):
     player_matches = []
     time_of_match = int(time.time())
     user_matches_url = f"https://data.ninjakiwi.com/battles2/users/{user_id}/matches"
-    async with httpx.AsyncClient() as client:
-        # ensure not over api limits
-        async with limiter:
-        # Perform a request
-            response = await client.get(user_matches_url, timeout=60 + user_count * 0.6)
-        user_matches_json = response.json()
+    try:
+        # async version of requests
+        async with httpx.AsyncClient() as client:
+            # ensure not over api limits
+            async with limiter:
+            # Perform a request
+                response = await client.get(user_matches_url, timeout=60 + user_count * 0.6)
+            response.raise_for_status()
+            user_matches_json = response.json()
+    # on error (ex. 502 Bad Gateway, return nothing)
+    except httpx.HTTPStatusError as e:
+        print(e)
+        return player_matches
     # check if endpoint works
     if user_matches_json["success"]:
         for user_match in user_matches_json["body"]:
@@ -47,16 +54,15 @@ async def fetch_and_process_match(user_id, supabase, season, user_count):
                 'end_round': user_match["endRound"],
                 'time': time_of_match
             })
-        return player_matches
-
+    return player_matches
 async def fill():
     supabase = bs_fns.supabase_auth()
     season = bs_fns.current_season()
+    # select hom users in current season
     data = supabase.table('hom_users') \
         .select('user_id') \
         .eq('season', season) \
         .execute().data
-    # select has funny output; change to 1d list in the next line
     user_ids = [user['user_id'] for user in data]
     # accumulate things to upsert here
     matches_lst = []
