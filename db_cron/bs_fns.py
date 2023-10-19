@@ -6,7 +6,7 @@ import time
 from supabase import create_client
 
 # Load environment variables from a .env file if available
-dotenv.load_dotenv(find_dotenv())
+dotenv.load_dotenv(dotenv.find_dotenv())
 
 # Function to get the current season number from Ninja Kiwi's API
 def current_season():
