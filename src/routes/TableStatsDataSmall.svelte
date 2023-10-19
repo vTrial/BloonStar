@@ -44,3 +44,10 @@
     <div class="table-data">{to_percent(data["wins"] / data["games"])}</div>
   {/each}
 {/if}
+
+<style>
+  .table-data {
+    padding: 1em 0em 1em 0em;
+    border-top: 1px dotted #A0A0A0;
+  }
+</style>

@@ -12,6 +12,7 @@
 
 <style>
   .table-header {
-    font-family: "Montserrat-SemiBold", sans-serif;
+    padding: 0em 0em 1em 0em;
+    font-family: Montserrat-SemiBold, Arial, Helvetica, sans-serif;
   }
 </style>

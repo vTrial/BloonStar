@@ -47,6 +47,7 @@
 
 <style>
   .table-data {
-    font-family: Arial, Helvetica, sans-serif;
+    padding: 1em 0em 1em 0em;
+    border-top: 1px dotted #A0A0A0;
   }
 </style>
