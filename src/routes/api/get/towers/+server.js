@@ -1,8 +1,9 @@
 import { supabase } from "$lib/supabaseClient"
-import { pastTime } from "$lib/sevenDaysAgo"
+import nDaysAgo from "$lib/bsFns"
 import { towerNames } from "$lib/ThingAliases"
 
 export const GET = async ({ url }) => {
+  const daysAgo = 7
   const towers = Object.keys(towerNames)
   const map_name = url.searchParams.get("map") ?? ""
   // Define tower_counts object to store tower data
@@ -12,7 +13,7 @@ export const GET = async ({ url }) => {
     const { data, error } = await supabase.rpc("tower_totals", {
       tower: tower,
       map_name: map_name,
-      time_cutoff: pastTime,
+      time_cutoff: nDaysAgo(daysAgo),
     })
     tower_counts[tower] = data[0]
   })

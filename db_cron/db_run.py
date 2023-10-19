@@ -13,7 +13,8 @@ def update_databases():
 	asyncio.run(matches_db.fill())
 
 def main():
-    # Schedule the task to run every 60 minutes
+    # Update db on boot
+    # then schedule the task to run every 60 minutes
     update_databases()
     schedule.every(60).minutes.do(update_databases)
     while True:
