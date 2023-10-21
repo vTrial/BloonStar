@@ -1,17 +1,18 @@
 <script>
-  import Nav from "./Nav.svelte"
-  import TableStatsWholeSmall from "./TableStatsWholeSmall.svelte"
+  import Nav from "$lib/svelteTemplates/Nav.svelte"
+  import TableStatsWholeSmall from "$lib/svelteTemplates/TableStatsWholeSmall.svelte"
   import { heroNames, towerNames } from "$lib/ThingAliases"
+  import Footer from "$lib/svelteTemplates/Footer.svelte"
 </script>
 
 <Nav />
-<a class="btn" href="/heroes">View Hero Stats</a>
 <h1>Top Heroes</h1>
+<a class="btn" href="/heroes">View Hero Stats</a>
 <TableStatsWholeSmall datatype="heroes" map="" thingNames={heroNames} />
-<a class="btn" href="/towers">View Tower Stats</a>
 <h1>Top Towers</h1>
+<a class="btn" href="/towers">View Tower Stats</a>
 <TableStatsWholeSmall datatype="towers" map="" thingNames={towerNames} />
-
+<Footer/>
 <style>
   a.btn {
     display: block;
