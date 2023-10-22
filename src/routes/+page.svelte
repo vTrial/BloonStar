@@ -20,6 +20,7 @@
     border-radius: 5px;
     font-weight: bold;
     line-height: 25px;
+    margin: 0em 0em 0em 1em;
   }
   h1 {
     margin: 0.5em;
