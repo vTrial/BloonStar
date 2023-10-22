@@ -14,10 +14,10 @@
 	  background-color: #e0e0e0; /* Add a background color for the container */
 	  justify-items: center;
 	  gap: 0.5em;
-	  padding: 1.5em;
+	  padding: 1em;
 	}
 	.footer-header {
 		font-family: Montserrat-SemiBold, Arial, Helvetica, sans-serif;
-		gap: 1em
+		margin: 0.5em;
 	}
 </style>
