@@ -23,5 +23,6 @@
     padding: 0.5em 4em 0.5em 0.5em;
     margin: 1em;
     font-size: 1em;
+    width: 10em;
   }
 </style>

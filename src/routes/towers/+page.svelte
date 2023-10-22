@@ -1,7 +1,6 @@
 <script>
-  import FilterDropdown from "./../FilterDropdown.svelte"
-  import Nav from "./../Nav.svelte"
-  import TableStatsWhole from "./../TableStatsWhole.svelte"
+  import FilterDropdown from "$lib/svelteTemplates/FilterDropdown.svelte"
+  import TableStatsWhole from "$lib/svelteTemplates/TableStatsWhole.svelte"
   import { mapNames, towerNames } from "$lib/ThingAliases"
   let selectedMap = ""
 
@@ -10,7 +9,6 @@
   }
 </script>
 
-<Nav />
 <h1>Top Battles 2 Towers</h1>
 <FilterDropdown on:filterChanged={handleFilterChanged} filterList={mapNames} />
 <TableStatsWhole datatype="towers" map={selectedMap} thingNames={towerNames} />

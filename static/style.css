@@ -11,6 +11,7 @@ src: url("/fonts/Montserrat-Regular.ttf") format("truetype"); /* Path to your fo
 * {
 	font-family: Montserrat-Regular, Arial, Helvetica, sans-serif;
 }
+
 a,
 a:visited,
 a:hover,

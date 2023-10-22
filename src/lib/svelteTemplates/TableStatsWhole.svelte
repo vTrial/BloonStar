@@ -15,10 +15,10 @@
   .table-stats-whole {
     display: grid;
     grid-template-columns: auto auto auto auto;
-    grid-gap: 20px; /* Gap between items */
-    padding: 20px; /* Add some padding around the grid */
+    padding: 20px 20px 0px 20px; /* Add some padding around the grid */
     background-color: #f0f0f0; /* Add a background color for the container */
     border-radius: 10px; /* Rounded corners */
     margin: 1em;
+    align-items: stretch;
   }
 </style>
