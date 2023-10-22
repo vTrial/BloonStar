@@ -3,6 +3,22 @@
 	import Footer from "$lib/svelteTemplates/Footer.svelte"
 </script>
 
-<Nav/>
-<slot></slot>
-<Footer/>
+<main>
+	<div class="page1">
+		<Nav/>
+		<slot></slot>
+	</div>
+	<Footer/>
+</main>
+
+<style>
+	/* make footer sticky */
+	.page1 {
+		display: flex;
+		flex-direction: column;
+		min-height: 95vh;
+	}
+	main {
+		flex-grow: 1;
+	}
+</style>
