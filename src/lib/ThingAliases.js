@@ -17,6 +17,7 @@ export const mapNames = [
   ["star", "Star"],
   ["pirate_cove", "Pirate Cove"],
   ["precious_space", "Precious Space"],
+  ["sun_palace", "Sun Palace"],
 ]
 
 export const towerNames = {
@@ -64,4 +65,5 @@ export const heroNames = {
   Jericho: "Agent Jericho",
   Jericho_Highwayman: "Highwayman Jericho",
   Jericho_StarCaptain: "Star Captain Jericho",
+  Adora: "Adora",
 }
